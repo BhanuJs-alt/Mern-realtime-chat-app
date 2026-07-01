@@ -1,12 +1,34 @@
-import { Request,Response } from "express";
+import { Request, Response } from "express";
 import * as authService from "../services/authService";
 
-export const register = async (req:Request,res:Response)=>{
+export const register = async (req: Request, res: Response) => {
+  const { user, token } = await authService.register(req.body);
 
-     const user = await  authService.register(req.body);
+  res
+    .cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    })
+    .status(201)
+    .json({
+      message: "user registered successfully",
+    });
+};
 
-      res.status(201).json({
-        user,
-        message:"user created", 
-      });
-}
+export const login = async (req: Request, res: Response) => {
+  const { user, token } = await authService.login(req.body);
+
+  res
+    .cookie("token", token, {
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    })
+    .status(400)
+    .json({
+      message: "Login successFul",
+    });
+};
