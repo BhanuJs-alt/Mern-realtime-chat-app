@@ -1,7 +1,7 @@
 import express,{Request,Response} from 'express';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
-
+import authRoute from './routes/authRoute';
 
 const app = express();
 
@@ -16,5 +16,7 @@ app.get('/',(req:Request ,res:Response)=>{
         message:"server is running"
     });
 });
+
+app.use('/auth',authRoute);
 
 export default app;
