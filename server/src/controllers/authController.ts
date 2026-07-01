@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import * as authService from "../services/authService";
 
 export const register = async (req: Request, res: Response) => {
-  const { user, token } = await authService.register(req.body);
+  const { token } = await authService.register(req.body);
 
   res
     .cookie("token", token, {
@@ -18,7 +18,7 @@ export const register = async (req: Request, res: Response) => {
 };
 
 export const login = async (req: Request, res: Response) => {
-  const { user, token } = await authService.login(req.body);
+  const { token } = await authService.login(req.body);
 
   res
     .cookie("token", token, {

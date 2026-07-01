@@ -20,7 +20,6 @@ export const register = async (data: RegisterUserDto) => {
   const token = createToken(user._id.toString());
 
   return {
-    user,
     token,
   };
 };
@@ -28,12 +27,11 @@ export const register = async (data: RegisterUserDto) => {
 export const login = async (data: LoginUserDto) => {
   const user = await User.findOne({
     email: data.email,
-  });
+  }).select("+password");
 
   if (!user) {
     throw new Error("Invalid credentials");
   }
-
   const isMatch = await bcrypt.compare(data.password, user.password);
   if (!isMatch) {
     throw new Error("Invalid credentials");
@@ -41,7 +39,6 @@ export const login = async (data: LoginUserDto) => {
   const token = createToken(user._id.toString());
 
   return {
-    user,
     token,
   };
 };
