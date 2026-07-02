@@ -27,7 +27,7 @@ export const login = async (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === "production",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     })
-    .status(400)
+    .status(200)
     .json({
       message: "Login successFul",
     });

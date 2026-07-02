@@ -6,7 +6,7 @@ import User from "../models/user";
 const authMiddleware = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction, 
 ) => {
   const token = req.cookies.token;
 
